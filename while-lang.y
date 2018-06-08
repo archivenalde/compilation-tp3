@@ -39,10 +39,10 @@
 %type<bexpr> bexpr
 
 /* start symbol for arithmetic expressions */
-%start maina
+/* %start maina */
 
 /* start symbol for boolean expressions */
-/* %start mainb */
+ %start mainb
 
 /* start symbol for commands */
 /* %start main */
@@ -87,7 +87,7 @@ maina:  aexpr '.'       {
 
 mainb:  bexpr '.'       {
                             /* print boolean expression tree */
-                            pr_bexpr($1);
+                            //pr_bexpr($1);
                             putchar('\n');
                             /* eval boolean expression tree
                              *
@@ -119,7 +119,19 @@ aexpr1:
   ;
 
 bexpr:
-  NUM {printf("mange tes grands morts\n");};
+  bexpr '<' bexpr               {printf("< ");}
+  | bexpr '>' bexpr             {printf("> ");}
+  | bexpr '=' bexpr             {printf("= ");}
+  | bexpr '>' '=' bexpr            {printf(">= ");}
+  | bexpr '<' '=' bexpr            {printf("<= ");}
+  | bexpr 'a' 'n' 'd' bexpr            {printf("and ");}
+  | bexpr 'o' 'r' bexpr            {printf("or ");}
+  | bexpr 'i' 'm' 'p' bexpr            {printf("imp ");}
+  | '!' bexpr                   {printf("! ");}
+  | '(' bexpr ')'               {printf("() ");}
+  | BCONST                      {printf("BCONST ");}
+  ;
+
 
 cmd:
   NUM {printf("mange tes morts\n");};

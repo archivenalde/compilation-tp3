@@ -10,19 +10,46 @@ void yyerror(char *);
 
 %%
 
-[0-9]+  {
-          yylval.ival = atoi(yytext);
-          return NUM;
-        }
+[0-9]+          {
+                    yylval.ival = atoi(yytext);
+                    return NUM;
+                }
 
-[+*\-/()\n] {
-            return *yytext;
-          }
+true            {
+                    yylval.bval = 1;
+                    return BCONST;
+                }
 
-[ \.\t] {
-          return *yytext;
-        }
-.     yyerror("invalid character");
+false           {
+                    yylval.bval = 0;
+                    return BCONST;
+                }
+
+[+*\-/()\n]     {
+                    return *yytext;
+                }
+
+(and|or|imp)    {
+                    return *yytext;
+                }
+
+"<="            {
+                    return *yytext;
+                }
+
+">="              {
+                    printf("Bonjour");
+                    return *yytext;
+                }
+
+[!<>=]          {
+                    return *yytext;
+                }
+
+
+[ \.\t] {;}
+
+. yyerror("invalid character");
 
 %%
 
