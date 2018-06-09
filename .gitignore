@@ -1,4 +1,5 @@
-a.out
+a.out*
 *~
 y.*
 lex.yy.c
+.DS_Store
