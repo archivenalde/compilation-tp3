@@ -39,10 +39,10 @@
 %type<bexpr> bexpr
 
 /* start symbol for arithmetic expressions */
-%start maina
+/* %start maina */
 
 /* start symbol for boolean expressions */
-/* %start mainb */
+%start mainb
 
 /* start symbol for commands */
 /* %start main */
@@ -119,7 +119,18 @@ aexpr1:
   ;
 
 bexpr:
-  NUM {printf("mange tes grands morts\n");};
+  '(' bexpr ')'                 { $$ = $2; }
+  | aexpr '>' aexpr               { $$ = mk_bexpr_comp('>', $1, $3);}
+  | aexpr '<' aexpr             { $$ = mk_bexpr_comp('<', $1, $3);}
+  | aexpr '=' aexpr             { $$ = mk_bexpr_comp('=', $1, $3);}
+  | aexpr '>''=' aexpr          { $$ = mk_bexpr_comp(44, $1, $4);}
+  | aexpr '<''=' aexpr          { $$ = mk_bexpr_comp(45, $1, $4);}
+  | bexpr '&''&' bexpr          { $$ = mk_bexpr_binop('&', $1, $4);}
+  | bexpr '|''|' bexpr          { $$ = mk_bexpr_binop('|', $1, $4);}
+  | '!' bexpr                   { $$ = mk_bexpr_unop('!', $2);}
+  | BCONST                      { $$ = mk_bexpr_bconst($1);}
+  ;
+
 
 cmd:
   NUM {printf("mange tes morts\n");};

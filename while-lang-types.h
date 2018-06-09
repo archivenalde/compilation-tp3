@@ -24,11 +24,11 @@ struct var_rec {
 struct aexpr {
     int tag;                            /* select the value in the union */
     union {
-        int num;                        /* number */
-        var_t var;                      /* variable */
-        struct aexpr *expr;             /* operand of a unary op */
+        int num;                        /* number tag == 0 */
+        var_t var;                      /* variable tag == 1x */
+        struct aexpr *expr;             /* operand of a unary op tag == 2x */
         struct{
-            struct aexpr *lexpr, *rexpr;    /* operands of a binary op */
+            struct aexpr *lexpr, *rexpr;    /* operands of a binary op tag == 3x */
         } binop;
     } data;
 };
@@ -36,13 +36,13 @@ struct aexpr {
 struct bexpr {
     int tag;                            /* select the value in the union */
     union {
-        boolean bval;                   /* boolean constant */
-        struct bexpr *expr;             /* operand of a unary op */
+        boolean bval;                   /* boolean constant  tag == 0*/
+        struct bexpr *expr;             /* operand of a unary op  tag == 2x */
         struct {
-            struct bexpr *lexpr, *rexpr;    /* operands of a binary op */
+            struct bexpr *lexpr, *rexpr;    /* operands of a binary op  tag == 3x */
         } binop;
         struct {
-            struct aexpr *lexpr, *rexpr;    /* operands of a binary comparison */
+            struct aexpr *lexpr, *rexpr;    /* operands of a binary comparison tag == 4x */
         } comp;
     } data;
 };

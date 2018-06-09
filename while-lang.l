@@ -19,6 +19,22 @@ void yyerror(char *);
             return *yytext;
           }
 
+true	{
+			yylval.bval = 1;
+			return BCONST;
+		}
+
+false	{
+			yylval.bval = 0;
+			return BCONST;
+		}
+
+
+[<>=!&\|] 	{	
+					return *yytext;
+			}
+
+
 
 [ \t]	{
 			;
@@ -27,6 +43,7 @@ void yyerror(char *);
 \. {
           return *yytext;
         }
+
 .     yyerror("invalid character");
 
 %%
