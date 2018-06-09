@@ -19,7 +19,12 @@ void yyerror(char *);
             return *yytext;
           }
 
-[ \.\t] {
+
+[ \t]	{
+			;
+		}
+
+\. {
           return *yytext;
         }
 .     yyerror("invalid character");
