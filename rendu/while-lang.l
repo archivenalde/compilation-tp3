@@ -2,6 +2,8 @@
 
 void yyerror(char *);
 
+#include <string.h>
+
 #include "while-lang-types.h"
 #include "y.tab.h"
 
@@ -15,7 +17,7 @@ void yyerror(char *);
           return NUM;
         }
 
-[+*\-/()\n] {
+[+*\-/()] {
             return *yytext;
           }
 
@@ -28,6 +30,12 @@ false	{
 			yylval.bval = 0;
 			return BCONST;
 		}
+
+[a-zA-Z]+ 	{
+				yylval.id = (char*) malloc(sizeof(char) * (yyleng + 1));
+				strcpy(yylval.id, yytext);
+				return ID;
+			}
 
 
 [<>=!&\|] 	{	
@@ -43,6 +51,8 @@ false	{
 \. {
           return *yytext;
         }
+
+\n 		;
 
 .     yyerror("invalid character");
 

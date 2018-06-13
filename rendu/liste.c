@@ -29,7 +29,6 @@ llist ajoutEnFin(llist liste, var_t variable)
 {
 	/*On crée le nouvel élément*/
 	element* newElement = malloc(sizeof(element));
-
 	/*On affecte la variable*/
 	newElement->variable = variable;
 
