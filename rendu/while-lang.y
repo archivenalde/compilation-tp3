@@ -95,6 +95,7 @@ mainb:  bexpr '.'       {
                              */
                             return 1;
                         }
+|       maina
 |       '.'             { return -1; }
 ;
 
@@ -117,7 +118,7 @@ aexpr1:
 
 bexpr:
   '(' bexpr ')'                 { $$ = $2; }
-  | aexpr '>' aexpr               { $$ = mk_bexpr_comp('>', $1, $3);}
+  | aexpr '>' aexpr             { $$ = mk_bexpr_comp('>', $1, $3);}
   | aexpr '<' aexpr             { $$ = mk_bexpr_comp('<', $1, $3);}
   | aexpr '=' aexpr             { $$ = mk_bexpr_comp('=', $1, $3);}
   | aexpr '>''=' aexpr          { $$ = mk_bexpr_comp(44, $1, $4);}
