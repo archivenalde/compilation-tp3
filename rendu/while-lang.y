@@ -12,9 +12,6 @@
     #include "while-lang-types.h"
     #include "while-lang-mk.h"
     #include "while-lang-pr.h"
-    #include "while-lang-mem.h"
-    #include "while-lang-eval.h"
-
 
     int yylex(void);
     void yyerror(char const*);

@@ -1,5 +1,8 @@
-a.out*
+rendu/a.out*
+rendu/*~
 *~
-y.*
-lex.yy.c
+rendu/y.*
+rendu/lex.yy.c
+rendu/.DS_Store
 .DS_Store
+rendu/exe*
