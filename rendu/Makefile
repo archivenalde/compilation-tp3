@@ -6,3 +6,9 @@ lex.yy.c: while-lang.l y.tab.h while-lang-types.h
 
 y.tab.c y.tab.h: while-lang.y
 	yacc -vd while-lang.y
+
+clean:
+	rm y.*
+	rm lex.yy.c
+	rm exe
+	rm -r exe*
