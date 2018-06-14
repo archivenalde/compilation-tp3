@@ -1,5 +1,6 @@
 #include "while-lang-mk.h"
 #include "while-lang-types.h"
+#include "while-lang-table.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -38,21 +39,26 @@ bexpr_t mk_bexpr_bconst(boolean b)
 
 
 
-// aexpr_t mk_aexpr_var(char *name)
-// {
-//   aexpr_t res = NULL;
+aexpr_t mk_aexpr_var(char *name)
+{
+  aexpr_t res = NULL;
 
-//   res = (aexpr_t)malloc(sizeof(struct aexpr));
-//   if(res == NULL)
-//   {
-//     printf("Erreur allocation memoire 3\n");
-//     exit(-1);
-//   }
-//   res->tag = 1;
-//   //res->data.var = n;
+  res = (aexpr_t)malloc(sizeof(struct aexpr));
+  if(res == NULL)
+  {
+    printf("Erreur allocation memoire 3\n");
+    exit(-1);
+  }
+  res->tag = 1;
+  res->data.var = table_lookup_id(name);
+  if(res->data.var == NULL)
+  {
+      printf("Erreur dans mk_aexpr_var, variable non presente dans la table\n");
+      exit(-1);
+  }
 
-//   return res;
-// }
+  return res;
+}
 
 aexpr_t mk_aexpr_unop(int op, aexpr_t expr)
 {
@@ -191,6 +197,10 @@ void pr_aexpr(aexpr_t ae)
 {
   if (ae->tag == 0)
     printf("%d", ae->data.num);
+  else if (ae->tag == 1)
+  {
+      printf("%s",ae->data.var->name);
+  }
   else if (20 < ae->tag && ae->tag < 30)
   {
     switch (ae->tag) {
@@ -243,7 +253,7 @@ void pr_bexpr(bexpr_t be)
         break;
       case 32:
         printf(" || ");
-        break;  
+        break;
     }
     pr_bexpr(be->data.binop.rexpr);
   }
@@ -260,13 +270,13 @@ void pr_bexpr(bexpr_t be)
         break;
       case 43:
         printf(" = ");
-        break;  
+        break;
       case 44:
         printf(" >= ");
-        break;  
+        break;
       case 45:
         printf(" <= ");
-        break;  
+        break;
     }
     pr_aexpr(be->data.comp.rexpr);
   }

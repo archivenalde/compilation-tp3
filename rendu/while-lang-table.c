@@ -52,6 +52,7 @@ int print_var_values(void)
 	{
 		variableIterateur = tmp->variable;
 		printf("%s = %d\n", variableIterateur->name, mem_get_val(variableIterateur->loc));
+		tmp = tmp->nxt;
 	}
 
 	if (tmp == NULL)

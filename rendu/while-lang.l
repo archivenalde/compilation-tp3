@@ -31,14 +31,14 @@ false	{
 			return BCONST;
 		}
 
-[a-zA-Z]+ 	{
+[a-zA-Z_][a-zA-Z_1-9]* 	{
 				yylval.id = (char*) malloc(sizeof(char) * (yyleng + 1));
 				strcpy(yylval.id, yytext);
 				return ID;
 			}
 
 
-[<>=!&\|] 	{	
+[<>=!&\|] 	{
 					return *yytext;
 			}
 

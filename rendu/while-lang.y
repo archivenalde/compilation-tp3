@@ -108,10 +108,9 @@ aexpr:
   | aexpr1
   | ID                          {
                                   printf("Regle ID : %s\n", $1);
-                                  if (table_lookup_id($1) == NULL) 
+                                  if (table_lookup_id($1) == NULL)
                                     printf("Erreur une varible n'est pas contenue dans la table");
-                                  else
-                                    printf("%s", $1);
+                                  $$ = mk_aexpr_var($1);
                                 }
   ;
 
@@ -154,12 +153,13 @@ int main(void) {
      *
      * uncomment for testing exercie 2 and following
      */
-    
+
     table_add_id("x");
     table_add_id("y");
     table_add_id("z");
-     
-    
+
+    print_var_values();
+
     /* initialise variables */
     /* uncomment for testing exercie 6 and following
      */
