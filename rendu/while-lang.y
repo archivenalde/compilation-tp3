@@ -12,6 +12,7 @@
     #include "while-lang-types.h"
     #include "while-lang-mk.h"
     #include "while-lang-pr.h"
+    #include "while-lang-table.h"
 
     int yylex(void);
     void yyerror(char const*);
@@ -105,6 +106,13 @@ aexpr:
   | '+' aexpr                   { $$ = mk_aexpr_unop('+', $2);}
   | '-' aexpr                   { $$ = mk_aexpr_unop('-', $2);}
   | aexpr1
+  | ID                          {
+                                  printf("Regle ID : %s\n", $1);
+                                  if (table_lookup_id($1) == NULL) 
+                                    printf("Erreur une varible n'est pas contenue dans la table");
+                                  else
+                                    printf("%s", $1);
+                                }
   ;
 
 aexpr1:
@@ -142,6 +150,30 @@ void yyerror(char const *msg) {
 }
 
 int main(void) {
-  yyparse();
-  return 0;
+   /* add variables to symbol table
+     *
+     * uncomment for testing exercie 2 and following
+     */
+    
+    table_add_id("x");
+    table_add_id("y");
+    table_add_id("z");
+     
+    
+    /* initialise variables */
+    /* uncomment for testing exercie 6 and following
+     */
+    /*
+    mem_set_val(table_lookup_id("x")->loc, 3);
+    mem_set_val(table_lookup_id("y")->loc, 1);
+    mem_set_val(table_lookup_id("z")->loc, -1);
+     */
+
+    printf("> ");
+    while (yyparse() != -1) {
+        printf("> ");
+    }
+    printf("\nBye...\n");
+
+    return 0;
 }
