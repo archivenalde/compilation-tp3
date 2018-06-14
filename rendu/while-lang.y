@@ -12,9 +12,6 @@
     #include "while-lang-types.h"
     #include "while-lang-mk.h"
     #include "while-lang-pr.h"
-    #include "while-lang-mem.h"
-    #include "while-lang-eval.h"
-
 
     int yylex(void);
     void yyerror(char const*);
@@ -98,6 +95,7 @@ mainb:  bexpr '.'       {
                              */
                             return 1;
                         }
+|       maina
 |       '.'             { return -1; }
 ;
 
@@ -120,7 +118,7 @@ aexpr1:
 
 bexpr:
   '(' bexpr ')'                 { $$ = $2; }
-  | aexpr '>' aexpr               { $$ = mk_bexpr_comp('>', $1, $3);}
+  | aexpr '>' aexpr             { $$ = mk_bexpr_comp('>', $1, $3);}
   | aexpr '<' aexpr             { $$ = mk_bexpr_comp('<', $1, $3);}
   | aexpr '=' aexpr             { $$ = mk_bexpr_comp('=', $1, $3);}
   | aexpr '>''=' aexpr          { $$ = mk_bexpr_comp(44, $1, $4);}
