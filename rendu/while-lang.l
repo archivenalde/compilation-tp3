@@ -12,14 +12,27 @@ void yyerror(char *);
 
 %%
 
+skip    return SKIP;
+
+:=      {
+        return ASSIGN;
+        }
+
+if      {
+            return IF;
+            }
+then    return THEN;
+
+else    return ELSE;
+
+while   return WHILE;
+
+do      return DO;
+
 [0-9]+  {
           yylval.ival = atoi(yytext);
           return NUM;
         }
-
-[+*\-/()] {
-            return *yytext;
-          }
 
 true	{
 			yylval.bval = 1;
@@ -38,7 +51,7 @@ false	{
 			}
 
 
-[<>=!&\|] 	{
+[<>=!&\|{}+*\-/();] 	{
 					return *yytext;
 			}
 
@@ -54,7 +67,9 @@ false	{
 
 \n 		;
 
-.     yyerror("invalid character");
+.     {
+        yyerror("invalid character");
+        }
 
 %%
 

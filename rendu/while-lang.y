@@ -40,10 +40,10 @@
 /* %start maina */
 
 /* start symbol for boolean expressions */
-%start mainb
+/* %start mainb */
 
 /* start symbol for commands */
-/* %start main */
+%start main
 
 %%
 
@@ -138,7 +138,14 @@ bexpr:
 
 
 cmd:
-  NUM {printf("mange tes morts\n");};
+  SKIP                          { $$ = mk_cmd_skip();}
+  | ID ASSIGN aexpr             { $$ = mk_cmd_ass($1, $3);}
+  | IF bexpr THEN cmd ELSE cmd  { $$ = mk_cmd_ite($2, $4, $6);}
+  | WHILE bexpr DO cmd          { $$ = mk_cmd_while($2, $4);}
+  | '{' cmd '}'                 { $$ = $2;}
+  | cmd ';' cmd                 { $$ = mk_cmd_seq($1, $3);}
+  ;
+
 
 
 
@@ -173,7 +180,7 @@ int main(void) {
     while (yyparse() != -1) {
         printf("> ");
     }
-    printf("\nBye...\n");
+    printf("Bye...\n");
 
     return 0;
 }

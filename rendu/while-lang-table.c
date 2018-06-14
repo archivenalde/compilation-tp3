@@ -16,14 +16,11 @@ var_t table_lookup_id(char *name)
 {
 	element* variableRecherche;
 	var_t variablePosition = (var_t) malloc(sizeof(*variablePosition));
-	printf("%s\n", name);
 
 	variablePosition->name = (char*) malloc(sizeof(char) * (strlen(name) + 1));
 	strcpy(variablePosition->name, name);
-	printf("table_lookup_id 1\n");
 
 	variableRecherche = rechercherElement(_VAR_TABLE_, variablePosition);
-	printf("table_lookup_id 2\n");
 
 	free(variablePosition);
 

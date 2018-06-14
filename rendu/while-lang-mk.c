@@ -281,3 +281,122 @@ void pr_bexpr(bexpr_t be)
     pr_aexpr(be->data.comp.rexpr);
   }
 }
+
+cmd_t mk_cmd_skip(void)
+{
+    cmd_t res = NULL;
+    res = (cmd_t)malloc(sizeof(*res));
+    if(res == NULL)
+    {
+        printf("Erreur allocation memoire cmd_t dans mk_cmd_skip\n");
+        exit(-1);
+    }
+    res->tag = 0;
+    return res;
+}
+
+cmd_t mk_cmd_ass(char *name, aexpr_t expr)
+{
+    cmd_t res = NULL;
+    res = (cmd_t)malloc(sizeof(*res));
+    if(res == NULL)
+    {
+        printf("Erreur allocation memoire cmd_t dans mk_cmd_skip\n");
+        exit(-1);
+    }
+    res->tag = 1;
+    res->data.cmd_ass.var = table_lookup_id(name);
+    res->data.cmd_ass.expr = expr;
+
+    if(res->data.cmd_ass.var == NULL)
+    {
+        printf("Erreur fonction mk_cmd_ass, variable (%s) introuvable dans le tableau\n",name);
+        exit(-1);
+    }
+    return res;
+}
+
+cmd_t mk_cmd_seq(cmd_t cmd1, cmd_t cmd2)
+{
+    cmd_t res = NULL;
+    res = (cmd_t)malloc(sizeof(*res));
+    if(res == NULL)
+    {
+        printf("Erreur allocation memoire cmd_t dans mk_cmd_skip\n");
+        exit(-1);
+    }
+    res->tag = 2;
+    res->data.cmd_seq.cmd1 = cmd1;
+    res->data.cmd_seq.cmd2 = cmd2;
+
+    return res;
+}
+
+cmd_t mk_cmd_ite(bexpr_t expr, cmd_t cmd_then, cmd_t cmd_else)
+{
+    cmd_t res = NULL;
+    res = (cmd_t)malloc(sizeof(*res));
+    if(res == NULL)
+    {
+        printf("Erreur allocation memoire cmd_t dans mk_cmd_skip\n");
+        exit(-1);
+    }
+    res->tag = 3;
+    res->data.cmd_ite.test = expr;
+    res->data.cmd_ite.cmd_then = cmd_then;
+    res->data.cmd_ite.cmd_else = cmd_else;
+
+    return res;
+}
+
+cmd_t mk_cmd_while(bexpr_t expr, cmd_t cmd_body)
+{
+    cmd_t res = NULL;
+    res = (cmd_t)malloc(sizeof(*res));
+    if(res == NULL)
+    {
+        printf("Erreur allocation memoire cmd_t dans mk_cmd_skip\n");
+        exit(-1);
+    }
+    res->tag = 4;
+    res->data.cmd_while.test = expr;
+    res->data.cmd_while.cmd_body = cmd_body;
+
+    return res;
+}
+
+void pr_cmd(cmd_t c)
+{
+    switch(c->tag)
+    {
+        case 0:
+            printf(" skip ");
+            break;
+        case 1:
+            printf("%s", c->data.cmd_ass.var->name);
+            printf(" := ");
+            pr_aexpr(c->data.cmd_ass.expr);
+            break;
+        case 2:
+            pr_cmd(c->data.cmd_seq.cmd1);
+            printf(" ; ");
+            pr_cmd(c->data.cmd_seq.cmd2);
+            break;
+        case 3:
+            printf(" if ");
+            pr_bexpr(c->data.cmd_ite.test);
+            putchar('\n');
+            printf(" then ");
+            pr_cmd(c->data.cmd_ite.cmd_then);
+            printf(" else ");
+            pr_cmd(c->data.cmd_ite.cmd_else);
+            break;
+        case 4:
+            printf(" while ");
+            pr_bexpr(c->data.cmd_while.test);
+            putchar('\n');
+            printf(" do\n");
+            pr_cmd(c->data.cmd_while.cmd_body);
+            break;
+    }
+}
