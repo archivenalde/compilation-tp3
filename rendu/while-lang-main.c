@@ -25,7 +25,7 @@ int main(int argc, const char * argv[]) {
     table_add_id("y");
     table_add_id("z");
      */
-    
+
     /* initialise variables
      *
     /* uncomment for testing exercie 6 and following

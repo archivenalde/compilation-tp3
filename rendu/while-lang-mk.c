@@ -304,6 +304,7 @@ cmd_t mk_cmd_ass(char *name, aexpr_t expr)
         printf("Erreur allocation memoire cmd_t dans mk_cmd_skip\n");
         exit(-1);
     }
+    table_add_id(name); //si variable deja declaree pas d'erreur
     res->tag = 1;
     res->data.cmd_ass.var = table_lookup_id(name);
     res->data.cmd_ass.expr = expr;

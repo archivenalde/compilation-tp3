@@ -96,7 +96,6 @@ boolean eval_bexpr(bexpr_t be)
 
 void eval_cmd(cmd_t cmd)
 {
-    printf("ta mere da,s le eval_cmd\n" );
     switch (cmd->tag) {
         case 0: //skip
             return;
@@ -115,7 +114,6 @@ void eval_cmd(cmd_t cmd)
                 eval_cmd(cmd->data.cmd_ite.cmd_else);
             break;
         case 4:
-            printf("ta mere da,s le while\n" );
             while (eval_bexpr(cmd->data.cmd_while.test))
                 eval_cmd(cmd->data.cmd_while.cmd_body);
             break;
