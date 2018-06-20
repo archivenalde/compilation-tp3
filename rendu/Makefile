@@ -1,5 +1,5 @@
 exe: lex.yy.c y.tab.c
-	gcc -o exe lex.yy.c y.tab.c -lm -ll liste.c while-lang-mk.c while-lang-table.c while-lang-mem.c -g
+	gcc -o exe lex.yy.c y.tab.c -lm -ll liste.c while-lang-mk.c while-lang-table.c while-lang-mem.c while-lang-eval.c -g
 
 lex.yy.c: while-lang.l y.tab.h while-lang-types.h
 	lex -l while-lang.l

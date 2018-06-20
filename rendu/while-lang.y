@@ -14,6 +14,7 @@
     #include "while-lang-pr.h"
     #include "while-lang-table.h"
     #include "while-lang-mem.h"
+    #include "while-lang-eval.h"
 
     int yylex(void);
     void yyerror(char const*);
@@ -57,11 +58,9 @@ main:   cmd '.'         {
                              *
                              * uncomment for testing exercice 7.3
                              */
-                            /*
                             eval_cmd($1);
                             print_var_values();
                             putchar('\n');
-                             */
                             return 0;
                         }
 |       '.'             { return -1; }
@@ -140,17 +139,12 @@ bexpr:
 
 cmd:
   SKIP                          { $$ = mk_cmd_skip();}
-  | ID ASSIGN aexpr             { $$ = mk_cmd_ass($1, $3);
-                                  table_add_id($1);
-                                  /*mem_set_val(table_lookup_id($1)->loc,eval_aexpr($3));*/
-                                }
+  | ID ASSIGN aexpr             { $$ = mk_cmd_ass($1, $3);}
   | IF bexpr THEN cmd ELSE cmd  { $$ = mk_cmd_ite($2, $4, $6);}
   | WHILE bexpr DO cmd          { $$ = mk_cmd_while($2, $4);}
   | '{' cmd '}'                 { $$ = $2;}
   | cmd ';' cmd                 { $$ = mk_cmd_seq($1, $3);}
   ;
-
-
 
 
 %%
@@ -186,6 +180,9 @@ int main(void) {
     }
     printf("Bye...\n");
 
+    mem_set_val(table_lookup_id("x")->loc, 3);
+    mem_set_val(table_lookup_id("y")->loc, 1);
+    mem_set_val(table_lookup_id("z")->loc, -1);
     print_var_values();
 
 
