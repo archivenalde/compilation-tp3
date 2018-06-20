@@ -143,16 +143,16 @@ bexpr:
   ;
 
 cmd:
-    cmd1 ';' cmd                { $$ = mk_cmd_seq($1, $3); printf("-- ; --\n");}
-    | cmd1                       { $$ = $1; printf("-- cmd -> cmd1 --\n");}
+    cmd1 ';' cmd                { $$ = mk_cmd_seq($1, $3);}
+    | cmd1                       { $$ = $1;}
     ;
 
 cmd1:
-  SKIP                          { $$ = mk_cmd_skip(); printf("-- skip --\n");}
-  | ID ASSIGN aexpr             { $$ = mk_cmd_ass($1, $3); printf("-- ass --\n");}
-  | IF bexpr THEN cmd1 ELSE cmd1  { $$ = mk_cmd_ite($2, $4, $6); printf("-- ite --\n");}
-  | WHILE bexpr DO cmd1          { $$ = mk_cmd_while($2, $4); printf("-- while --\n");}
-  | '{' cmd '}'                 { $$ = $2; printf("-- {} --\n");}
+  SKIP                          { $$ = mk_cmd_skip();}
+  | ID ASSIGN aexpr             { $$ = mk_cmd_ass($1, $3);}
+  | IF bexpr THEN cmd1 ELSE cmd1  { $$ = mk_cmd_ite($2, $4, $6);}
+  | WHILE bexpr DO cmd1          { $$ = mk_cmd_while($2, $4);}
+  | '{' cmd '}'                 { $$ = $2;}
   ;
 
 
@@ -191,8 +191,8 @@ int main(void) {
 
     /*mem_set_val(table_lookup_id("x")->loc, 3);
     mem_set_val(table_lookup_id("y")->loc, 1);
-    mem_set_val(table_lookup_id("z")->loc, -1);*/
-    print_var_values();
+    mem_set_val(table_lookup_id("z")->loc, -1);
+    print_var_values();*/
 
 
     return 0;

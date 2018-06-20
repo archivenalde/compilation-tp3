@@ -386,7 +386,6 @@ void pr_cmd(cmd_t c)
         case 3:
             printf(" if ");
             pr_bexpr(c->data.cmd_ite.test);
-            putchar('\n');
             printf(" then ");
             pr_cmd(c->data.cmd_ite.cmd_then);
             printf(" else ");
@@ -395,8 +394,7 @@ void pr_cmd(cmd_t c)
         case 4:
             printf(" while ");
             pr_bexpr(c->data.cmd_while.test);
-            putchar('\n');
-            printf(" do\n");
+            printf(" do ");
             pr_cmd(c->data.cmd_while.cmd_body);
             break;
     }
