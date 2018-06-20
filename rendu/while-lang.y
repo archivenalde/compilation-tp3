@@ -13,6 +13,7 @@
     #include "while-lang-mk.h"
     #include "while-lang-pr.h"
     #include "while-lang-table.h"
+    #include "while-lang-mem.h"
 
     int yylex(void);
     void yyerror(char const*);
@@ -109,7 +110,7 @@ aexpr:
   | ID                          {
                                   printf("Regle ID : %s\n", $1);
                                   if (table_lookup_id($1) == NULL)
-                                    printf("Erreur une varible n'est pas contenue dans la table");
+                                    printf("Erreur une variable n'est pas contenue dans la table");
                                   $$ = mk_aexpr_var($1);
                                 }
   ;
@@ -139,7 +140,10 @@ bexpr:
 
 cmd:
   SKIP                          { $$ = mk_cmd_skip();}
-  | ID ASSIGN aexpr             { $$ = mk_cmd_ass($1, $3);}
+  | ID ASSIGN aexpr             { $$ = mk_cmd_ass($1, $3);
+                                  table_add_id($1);
+                                  /*mem_set_val(table_lookup_id($1)->loc,eval_aexpr($3));*/
+                                }
   | IF bexpr THEN cmd ELSE cmd  { $$ = mk_cmd_ite($2, $4, $6);}
   | WHILE bexpr DO cmd          { $$ = mk_cmd_while($2, $4);}
   | '{' cmd '}'                 { $$ = $2;}
@@ -165,22 +169,25 @@ int main(void) {
     table_add_id("y");
     table_add_id("z");
 
-    print_var_values();
 
     /* initialise variables */
     /* uncomment for testing exercie 6 and following
      */
-    /*
+
     mem_set_val(table_lookup_id("x")->loc, 3);
     mem_set_val(table_lookup_id("y")->loc, 1);
     mem_set_val(table_lookup_id("z")->loc, -1);
-     */
+
+    print_var_values();
 
     printf("> ");
     while (yyparse() != -1) {
         printf("> ");
     }
     printf("Bye...\n");
+
+    print_var_values();
+
 
     return 0;
 }

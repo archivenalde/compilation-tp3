@@ -7,10 +7,6 @@
 
 static llist _VAR_TABLE_ = NULL;
 
-int mem_get_val(int loc)
-{
-	return 0;
-}
 
 var_t table_lookup_id(char *name)
 {
@@ -22,20 +18,26 @@ var_t table_lookup_id(char *name)
 
 	variableRecherche = rechercherElement(_VAR_TABLE_, variablePosition);
 
+	free(variablePosition->name);
 	free(variablePosition);
 
-	return variablePosition == NULL ? NULL : variableRecherche->variable;
+	return variableRecherche == NULL ? NULL : variableRecherche->variable;
 }
 
 var_t table_add_id(char* name)
 {
+	static int location = 0;
+	if (table_lookup_id(name) != NULL)
+		return table_lookup_id(name);
+
 	var_t variableAjout = (var_t) malloc(sizeof(*variableAjout));
 
 	variableAjout->name = (char*) malloc(sizeof(char) * (strlen(name) + 1));
+	variableAjout->loc = location;
 	strcpy(variableAjout->name, name);
 
 	_VAR_TABLE_ = ajoutEnFin(_VAR_TABLE_, variableAjout);
-
+	location ++;
 
 	return variableAjout;
 }
