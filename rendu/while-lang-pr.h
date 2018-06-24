@@ -9,6 +9,8 @@
 #ifndef __while_lang_pr__
 #define __while_lang_pr__
 
+#include "while-lang-types.h"
+
 void pr_aexpr(aexpr_t ae);
 void pr_bexpr(bexpr_t be);
 void pr_cmd(cmd_t cmd);
