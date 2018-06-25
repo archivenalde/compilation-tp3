@@ -21,19 +21,19 @@ int main(int argc, const char * argv[]) {
      * uncomment for testing exercie 2 and following
      */
     /*
-    table_add_id("x");
-    table_add_id("y");
-    table_add_id("z");
+       table_add_id("x");
+       table_add_id("y");
+       table_add_id("z");
      */
 
     /* initialise variables
-     *
+     */
     /* uncomment for testing exercie 6 and following
      */
     /*
-    mem_set_val(table_lookup_id("x")->loc, 3);
-    mem_set_val(table_lookup_id("y")->loc, 1);
-    mem_set_val(table_lookup_id("z")->loc, -1);
+       mem_set_val(table_lookup_id("x")->loc, 3);
+       mem_set_val(table_lookup_id("y")->loc, 1);
+       mem_set_val(table_lookup_id("z")->loc, -1);
      */
 
     printf("> ");
