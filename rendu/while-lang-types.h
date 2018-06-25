@@ -16,10 +16,15 @@ typedef struct aexpr *aexpr_t;
 typedef struct bexpr *bexpr_t;
 typedef struct cmd *cmd_t;
 
+/* Structure de variable */
+
 struct var_rec {
     char *name;                         /* variable name */
     int loc;                            /* variable location */
 };
+
+
+/* Structure des expressions arithmetiques */
 
 struct aexpr {
     int tag;                            /* select the value in the union */
@@ -32,6 +37,9 @@ struct aexpr {
         } binop;
     } data;
 };
+
+
+/* Structure des expressions booleennes */
 
 struct bexpr {
     int tag;                            /* select the value in the union */
@@ -46,6 +54,9 @@ struct bexpr {
         } comp;
     } data;
 };
+
+
+/* Structures des commandes */
 
 struct cmd_ass {
     var_t var;                         /* lhs variable */
