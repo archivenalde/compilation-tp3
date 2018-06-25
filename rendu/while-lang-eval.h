@@ -9,6 +9,8 @@
 #ifndef __while_lang_eval__
 #define __while_lang_eval__
 
+#include "while-lang-types.h"
+
 int eval_aexpr(aexpr_t ae);
 void eval_cmd(cmd_t cmd);
 boolean eval_bexpr(bexpr_t be);

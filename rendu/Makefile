@@ -10,5 +10,4 @@ y.tab.c y.tab.h: while-lang.y
 clean:
 	rm y.*
 	rm lex.yy.c
-	rm exe
 	rm -r exe*
