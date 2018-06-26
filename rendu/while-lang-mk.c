@@ -25,7 +25,7 @@ aexpr_t mk_aexpr_num(int n)
         exit(-1);
     }
 
-    res->tag = 0;
+    res->tag = NUM_AEXPR;
     res->data.num = n;
 
     return res;
@@ -42,7 +42,7 @@ aexpr_t mk_aexpr_var(char *name)
         exit(-1);
     }
 
-    res->tag = 1;
+    res->tag = ID_AEXPR;
     res->data.var = table_lookup_id(name);
 
     if(res->data.var == NULL)
@@ -68,10 +68,10 @@ aexpr_t mk_aexpr_unop(int op, aexpr_t expr)
     switch (op)
     {
         case '+':
-            res->tag = 21;
+            res->tag = UN_PLUS_AEXPR;
             break;
         case '-':
-            res->tag = 22;
+            res->tag = UN_MINUS_AEXPR;
             break;
     }
     res->data.expr = expr;
@@ -95,16 +95,16 @@ aexpr_t mk_aexpr_binop(int op, aexpr_t lexpr, aexpr_t rexpr)
     switch (op)
     {
         case '+':
-            res->tag = 31;
+            res->tag = BIN_PLUS_AEXPR;
             break;
         case '-':
-            res->tag = 32;
+            res->tag = BIN_MINUS_AEXPR;
             break;
         case '*':
-            res->tag = 33;
+            res->tag = MULT_AEXPR;
             break;
         case '/':
-            res->tag = 34;
+            res->tag = DIV_AEXPR;
             break;
     }
 
@@ -137,7 +137,7 @@ bexpr_t mk_bexpr_bconst(boolean b)
         exit(-1);
     }
 
-    res->tag = 0;
+    res->tag = BCONST_EXPR;
     res->data.bval = b;
 
     return res;
@@ -158,7 +158,7 @@ bexpr_t mk_bexpr_unop(int op, bexpr_t expr)
         exit(-1);
     }
 
-    res->tag = 1;
+    res->tag = NOT_EXPR;
     res->data.expr = expr;
 
     return res;
@@ -179,10 +179,10 @@ bexpr_t mk_bexpr_binop(int op, bexpr_t lexpr, bexpr_t rexpr)
     switch (op)
     {
         case '&':
-            res->tag = 31;
+            res->tag = AND_BEXPR;
             break;
         case '|':
-            res->tag = 32;
+            res->tag = OR_BEXPR;
             break;
     }
     res->data.binop.lexpr = lexpr;
@@ -206,19 +206,19 @@ bexpr_t mk_bexpr_comp(int op, aexpr_t lexpr, aexpr_t rexpr)
     switch (op)
     {
         case '>':
-            res->tag = 41;
+            res->tag = GREATER_BEXPR;
             break;
         case '<':
-            res->tag = 42;
+            res->tag = LESSER_BEXPR;
             break;
         case '=':
-            res->tag = 43;
+            res->tag = EQUAL_BEXPR;
             break;
         case 44: // >=
-            res->tag = 44;
+            res->tag = GR_OR_EQ_BEXPR;
             break;
         case 45: // <=
-            res->tag = 45;
+            res->tag = LE_OR_EQ_BEXPR;
             break;
     }
     res->data.comp.lexpr = lexpr;
@@ -247,7 +247,7 @@ cmd_t mk_cmd_skip(void)
         exit(-1);
     }
 
-    res->tag = 0;
+    res->tag = SKIP_CMD;
 
     return res;
 }
@@ -264,7 +264,7 @@ cmd_t mk_cmd_ass(char *name, aexpr_t expr)
     }
 
     table_add_id(name); //La fonction test d'abord si la varible n'est pas deja presente dans la table de variable
-    res->tag = 1;
+    res->tag = ASS_CMD;
     res->data.cmd_ass.var = table_lookup_id(name);
     res->data.cmd_ass.expr = expr;
 
@@ -288,7 +288,7 @@ cmd_t mk_cmd_seq(cmd_t cmd1, cmd_t cmd2)
         exit(-1);
     }
 
-    res->tag = 2;
+    res->tag = SEQ_CMD;
     res->data.cmd_seq.cmd1 = cmd1;
     res->data.cmd_seq.cmd2 = cmd2;
 
@@ -306,7 +306,7 @@ cmd_t mk_cmd_ite(bexpr_t expr, cmd_t cmd_then, cmd_t cmd_else)
         exit(-1);
     }
 
-    res->tag = 3;
+    res->tag = ITE_CMD;
     res->data.cmd_ite.test = expr;
     res->data.cmd_ite.cmd_then = cmd_then;
     res->data.cmd_ite.cmd_else = cmd_else;
@@ -325,7 +325,7 @@ cmd_t mk_cmd_while(bexpr_t expr, cmd_t cmd_body)
         exit(-1);
     }
     
-    res->tag = 4;
+    res->tag = WHILE_CMD;
     res->data.cmd_while.test = expr;
     res->data.cmd_while.cmd_body = cmd_body;
 

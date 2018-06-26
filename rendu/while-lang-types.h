@@ -16,6 +16,39 @@ typedef struct aexpr *aexpr_t;
 typedef struct bexpr *bexpr_t;
 typedef struct cmd *cmd_t;
 
+#define NUM_AEXPR 0
+#define ID_AEXPR 1
+
+#define UN_PLUS_AEXPR 21
+#define UN_MINUS_AEXPR 22
+
+#define BIN_PLUS_AEXPR 31
+#define BIN_MINUS_AEXPR 32
+#define MULT_AEXPR 33
+#define DIV_AEXPR 34
+
+
+
+#define BCONST_EXPR 0
+#define NOT_EXPR 1
+
+#define AND_BEXPR 31
+#define OR_BEXPR 32
+
+#define GREATER_BEXPR 41
+#define LESSER_BEXPR 42
+#define EQUAL_BEXPR 43
+#define GR_OR_EQ_BEXPR 44
+#define LE_OR_EQ_BEXPR 45
+
+
+
+#define SKIP_CMD 0
+#define ASS_CMD 1
+#define SEQ_CMD 2
+#define ITE_CMD 3
+#define WHILE_CMD 4
+
 /* Structure de variable */
 
 struct var_rec {

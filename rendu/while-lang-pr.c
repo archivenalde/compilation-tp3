@@ -14,19 +14,19 @@
 
 void pr_aexpr(aexpr_t ae)
 {
-    if (ae->tag == 0)
+    if (ae->tag == NUM_AEXPR)
         printf("%d", ae->data.num);
-    else if (ae->tag == 1)
+    else if (ae->tag == ID_AEXPR)
     {
         printf("%s",ae->data.var->name);
     }
-    else if (20 < ae->tag && ae->tag < 30)
+    else if (UN_PLUS_AEXPR <= ae->tag && ae->tag <= UN_MINUS_AEXPR)
     {
         switch (ae->tag) {
-            case 21:
+            case UN_PLUS_AEXPR:
                 printf("+");
                 break;
-            case 22:
+            case UN_MINUS_AEXPR:
                 printf("-");
                 break;
         }
@@ -35,16 +35,16 @@ void pr_aexpr(aexpr_t ae)
     else {
         pr_aexpr(ae->data.binop.lexpr);
         switch (ae->tag) {
-            case 31:
+            case BIN_PLUS_AEXPR:
                 printf("+");
                 break;
-            case 32:
+            case BIN_MINUS_AEXPR:
                 printf("-");
                 break;
-            case 33:
+            case MULT_AEXPR:
                 printf("*");
                 break;
-            case 34:
+            case DIV_AEXPR:
                 printf("/");
                 break;
         }
@@ -62,14 +62,14 @@ void pr_aexpr(aexpr_t ae)
 
 void pr_bexpr(bexpr_t be)
 {
-    if (be->tag == 0)
+    if (be->tag == BCONST_EXPR)
         printf("%s", be->data.bval ? "true" : "false");
-    else if (be->tag == 1)
+    else if (be->tag == NOT_EXPR)
     {
         printf("!");
         pr_bexpr(be->data.expr);
     }
-    else if (30 < be->tag && be->tag < 40)
+    else if (AND_BEXPR <= be->tag && be->tag <= OR_BEXPR)
     {
         pr_bexpr(be->data.binop.lexpr);
         switch (be->tag)
@@ -88,19 +88,19 @@ void pr_bexpr(bexpr_t be)
         pr_aexpr(be->data.comp.lexpr);
         switch (be->tag)
         {
-            case 41:
+            case GREATER_BEXPR:
                 printf(" > ");
                 break;
-            case 42:
+            case LESSER_BEXPR:
                 printf(" < ");
                 break;
-            case 43:
+            case EQUAL_BEXPR:
                 printf(" = ");
                 break;
-            case 44:
+            case GR_OR_EQ_BEXPR:
                 printf(" >= ");
                 break;
-            case 45:
+            case LE_OR_EQ_BEXPR:
                 printf(" <= ");
                 break;
         }
@@ -119,20 +119,20 @@ void pr_cmd(cmd_t c)
 {
     switch(c->tag)
     {
-        case 0:
+        case SKIP_CMD:
             printf(" skip ");
             break;
-        case 1:
+        case ASS_CMD:
             printf("%s", c->data.cmd_ass.var->name);
             printf(" := ");
             pr_aexpr(c->data.cmd_ass.expr);
             break;
-        case 2:
+        case SEQ_CMD:
             pr_cmd(c->data.cmd_seq.cmd1);
             printf(" ; ");
             pr_cmd(c->data.cmd_seq.cmd2);
             break;
-        case 3:
+        case ITE_CMD:
             printf(" if ");
             pr_bexpr(c->data.cmd_ite.test);
             printf(" then ");
@@ -140,7 +140,7 @@ void pr_cmd(cmd_t c)
             printf(" else ");
             pr_cmd(c->data.cmd_ite.cmd_else);
             break;
-        case 4:
+        case WHILE_CMD:
             printf(" while ");
             pr_bexpr(c->data.cmd_while.test);
             printf(" do ");
