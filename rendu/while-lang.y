@@ -110,7 +110,7 @@ aexpr:
   | aexpr1
   | ID                          {
                                   if (table_lookup_id($1) == NULL)
-                                    printf("Erreur une variable n'est pas contenue dans la table");
+                                    printf("Erreur une variable n'est pas contenue dans la table\n");
                                   $$ = mk_aexpr_var($1);
                                 }
   ;

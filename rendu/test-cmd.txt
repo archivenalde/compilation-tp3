@@ -3,5 +3,6 @@ y := 1;
 a := x*y;
 while(x > 1) do {y := y*x ; x := x-1};
 if (false) then {skip} else y := y+1; x := x-1.
-f := 5 ; f := f/0.
+d := x+d.
+f := a/0.
 .
