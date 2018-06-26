@@ -1,5 +1,5 @@
 %{
-
+// Theo DELACOUX et Adlane LADJAL
 void yyerror(char *);
 
 #include <string.h>

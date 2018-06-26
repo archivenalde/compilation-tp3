@@ -4,6 +4,9 @@
  *
  *  Created by Stefano Guerrini on 05/06/2015.
  *  Copyright (c) 2015 Stefano Guerrini. All rights reserved.
+
+ *  Theo DELACOUX et Adlane LADJAL
+
  */
 
 %{
@@ -123,7 +126,7 @@ aexpr1:
   | '-' aexpr1                  { $$ = mk_aexpr_unop('-', $2);}
   | ID                          {
                                   if (table_lookup_id($1) == NULL)
-                                    printf("Erreur une variable n'est pas contenue dans la table");
+                                    printf("Erreur une variable n'est pas contenue dans la table\n");
                                   $$ = mk_aexpr_var($1);
                                 }
   | NUM                         { $$ = mk_aexpr_num($1); }
@@ -136,6 +139,7 @@ bexpr:
   | aexpr '=' aexpr             { $$ = mk_bexpr_comp('=', $1, $3);}
   | aexpr '>''=' aexpr          { $$ = mk_bexpr_comp(44, $1, $4);}
   | aexpr '<''=' aexpr          { $$ = mk_bexpr_comp(45, $1, $4);}
+  | aexpr '!''=' aexpr          { $$ = mk_bexpr_comp(46, $1, $4);}
   | bexpr '&''&' bexpr          { $$ = mk_bexpr_binop('&', $1, $4);}
   | bexpr '|''|' bexpr          { $$ = mk_bexpr_binop('|', $1, $4);}
   | '!' bexpr                   { $$ = mk_bexpr_unop('!', $2);}

@@ -1,3 +1,6 @@
+// Theo DELACOUX et Adlane LADJAL
+
+
 #include <string.h>
 #include <stdio.h>
 

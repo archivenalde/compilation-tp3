@@ -1,3 +1,8 @@
+// Theo DELACOUX et Adlane LADJAL
+
+#ifndef LISTE_H
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "while-lang-types.h"
@@ -38,3 +43,7 @@ int comptNbrElmt		(llist liste);
 
 
 void  afficherListe		(llist liste);
+
+
+#define LISTE_H
+#endif

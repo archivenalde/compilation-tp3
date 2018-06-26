@@ -1,3 +1,6 @@
+// Theo DELACOUX et Adlane LADJAL
+
+
 #include "while-lang-pr.h"
 
 #include "while-lang-types.h"
@@ -74,10 +77,10 @@ void pr_bexpr(bexpr_t be)
         pr_bexpr(be->data.binop.lexpr);
         switch (be->tag)
         {
-            case 31:
+            case AND_BEXPR:
                 printf(" && ");
                 break;
-            case 32:
+            case OR_BEXPR:
                 printf(" || ");
                 break;
         }
@@ -102,6 +105,9 @@ void pr_bexpr(bexpr_t be)
                 break;
             case LE_OR_EQ_BEXPR:
                 printf(" <= ");
+                break;
+            case NEQ_BEXPR:
+                printf(" != ");
                 break;
         }
         pr_aexpr(be->data.comp.rexpr);

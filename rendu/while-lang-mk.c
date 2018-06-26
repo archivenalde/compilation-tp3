@@ -1,3 +1,6 @@
+// Theo DELACOUX et Adlane LADJAL
+
+
 #include "while-lang-mk.h"
 
 #include "while-lang-types.h"
@@ -214,11 +217,14 @@ bexpr_t mk_bexpr_comp(int op, aexpr_t lexpr, aexpr_t rexpr)
         case '=':
             res->tag = EQUAL_BEXPR;
             break;
-        case 44: // >=
+        case GR_OR_EQ_BEXPR: // >=
             res->tag = GR_OR_EQ_BEXPR;
             break;
-        case 45: // <=
+        case LE_OR_EQ_BEXPR: // <=
             res->tag = LE_OR_EQ_BEXPR;
+            break;
+        case NEQ_BEXPR:
+            res->tag = NEQ_BEXPR;
             break;
     }
     res->data.comp.lexpr = lexpr;

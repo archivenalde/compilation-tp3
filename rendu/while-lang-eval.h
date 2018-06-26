@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 Stefano Guerrini. All rights reserved.
 //
 
+// Theo DELACOUX et Adlane LADJAL
+
+
 #ifndef __while_lang_eval__
 #define __while_lang_eval__
 

@@ -1,0 +1,2 @@
+> Erreur une variable n'est pas contenue dans la table
+Erreur dans mk_aexpr_var, variable non presente dans la table

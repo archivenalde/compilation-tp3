@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Stefano Guerrini. All rights reserved.
 //
 
+// Theo DELACOUX et Adlane LADJAL
+
 #ifndef __while_lang_types__
 #define __while_lang_types__
 
@@ -40,6 +42,7 @@ typedef struct cmd *cmd_t;
 #define EQUAL_BEXPR 43
 #define GR_OR_EQ_BEXPR 44
 #define LE_OR_EQ_BEXPR 45
+#define NEQ_BEXPR 46
 
 
 

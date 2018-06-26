@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 Stefano Guerrini. All rights reserved.
 //
 
+// Theo DELACOUX et Adlane LADJAL
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
